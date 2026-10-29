@@ -295,6 +295,10 @@ b,strong{font-weight:600}
 .kvs{grid-template-columns:1fr 1fr;gap:12px}
 .kvs>div{border-bottom:1px solid var(--line2);padding-bottom:6px}
 .kvs small{font-size:10.5px;font-weight:500;text-transform:uppercase}
+.ud{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;color:var(--tx2)}
+.ud[hidden]{display:none}
+.ud .i{width:22px;height:22px;padding:4px;border-radius:7px;background:rgba(var(--a-rgb),.12);color:var(--a-ink)}
+.ud em{font-style:normal;font-variant-numeric:tabular-nums;font-weight:500}
 html[dir=ltr] .kvs small,html[dir=ltr] .foot{letter-spacing:.08em}
 html[dir=ltr] .pt{letter-spacing:.01em}
 .banners:not(:empty){margin-bottom:12px}
@@ -381,6 +385,8 @@ window.TEPERPRO_CONFIG = {
 <linearGradient id="gB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--c1)"/><stop offset="1" style="stop-color:var(--a1)"/></linearGradient>
 <linearGradient id="gBrand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--b1)"/><stop offset=".55" style="stop-color:var(--b2)"/><stop offset="1" style="stop-color:var(--b3)"/></linearGradient>
 </defs>
+<symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+<symbol id="i-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></symbol>
 <symbol id="i-brand" viewBox="0 0 24 24" stroke-linejoin="round"><path d="M12 2 4.2 5.1v5.9c0 4.9 3.3 9.1 7.8 11 4.5-1.9 7.8-6.1 7.8-11V5.1z" fill="none" stroke="url(#gBrand)" stroke-width="1.9"/><path d="M12 2v20c4.5-1.9 7.8-6.1 7.8-11V5.1z" fill="url(#gBrand)"/></symbol>
 <symbol id="i-person" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c0-4.1 3.4-7.5 7.5-7.5s7.5 3.4 7.5 7.5"/></symbol>
 <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></symbol>
@@ -464,8 +470,8 @@ window.TEPERPRO_CONFIG = {
             <div class="ring-c"><b id="traffic-pct" class="skel">00%</b><small id="traffic-lbl"></small></div>
           </div>
           <div class="kvs">
-            <div><small data-i18n="used">مصرف‌شده</small><b id="u-used" class="skel">0 MB</b></div>
-            <div><small data-i18n="remaining_t">باقی‌مانده</small><b id="u-remain" class="skel">0 MB</b></div>
+            <div><small data-i18n="used">مصرف‌شده</small><b id="u-used" class="skel">0 MB</b><span class="ud" id="ud-up" hidden><svg class="i"><use href="#i-arrow-up" xlink:href="#i-arrow-up"/></svg><em id="u-up">0 B</em></span></div>
+            <div><small data-i18n="remaining_t">باقی‌مانده</small><b id="u-remain" class="skel">0 MB</b><span class="ud" id="ud-down" hidden><svg class="i"><use href="#i-arrow-down" xlink:href="#i-arrow-down"/></svg><em id="u-down">0 B</em></span></div>
           </div>
         </div>
         <p class="quota skel" id="u-quota">.......</p>
@@ -494,31 +500,27 @@ window.TEPERPRO_CONFIG = {
     <!-- SET UP -->
     <section class="pane" id="pane-setup">
       <div class="panel">
-        <div class="ph step"><span class="sn">1</span><span class="pt-lg" data-i18n="setup1">نصب برنامه</span></div>
-        <div id="rec-card"></div>
-        <div class="pt" style="margin:18px 0 10px"><span data-i18n="apps_all">همه‌ی اپلیکیشن‌ها</span></div>
-        <div class="os-grid" id="os-grid"></div>
-      </div>
-      <div class="panel">
-        <div class="ph step"><span class="sn">2</span><span class="pt-lg" data-i18n="setup2">افزودن اشتراک</span></div>
+        <div class="ph step"><span class="sn">1</span><span class="pt-lg" data-i18n="setup2">افزودن اشتراک</span></div>
         <p class="hint" data-i18n="sub_hint"></p>
         <div class="subbox"><code id="sub-url">…</code>
           <button class="iconbtn" id="sub-copy" type="button" aria-label="Copy"><svg class="i"><use href="#i-copy" xlink:href="#i-copy"/></svg></button>
           <button class="iconbtn" id="sub-qr" type="button" aria-label="QR"><svg class="i"><use href="#i-qr" xlink:href="#i-qr"/></svg></button></div>
       </div>
       <div class="panel">
-        <div class="ph step"><span class="sn">3</span><span class="pt-lg" data-i18n="setup3">اتصال</span></div>
-        <p class="hint" style="margin:0" data-i18n="setup3d"></p>
+        <div class="ph"><span class="pt"><svg class="i"><use href="#i-server" xlink:href="#i-server"/></svg><span data-i18n="cfg_title">کانفیگ‌ها</span><span class="badge" id="cfg-count">0</span></span>
+          <button class="btn sm" id="btn-copy-all" type="button"><svg class="i"><use href="#i-copy" xlink:href="#i-copy"/></svg><span data-i18n="copy_all">کپی همه</span></button></div>
+        <div class="search"><svg class="i"><use href="#i-search" xlink:href="#i-search"/></svg><input id="cfg-search" type="search" autocomplete="off" data-i18n-ph="search" placeholder="جستجو در کانفیگ‌ها…"></div>
+        <div class="list" id="cfg-list"></div>
       </div>
     </section>
 
     <!-- ADVANCED -->
     <section class="pane" id="pane-advanced">
       <div class="panel">
-        <div class="ph"><span class="pt"><svg class="i"><use href="#i-server" xlink:href="#i-server"/></svg><span data-i18n="cfg_title">کانفیگ‌ها</span><span class="badge" id="cfg-count">0</span></span>
-          <button class="btn sm" id="btn-copy-all" type="button"><svg class="i"><use href="#i-copy" xlink:href="#i-copy"/></svg><span data-i18n="copy_all">کپی همه</span></button></div>
-        <div class="search"><svg class="i"><use href="#i-search" xlink:href="#i-search"/></svg><input id="cfg-search" type="search" autocomplete="off" data-i18n-ph="search" placeholder="جستجو در کانفیگ‌ها…"></div>
-        <div class="list" id="cfg-list"></div>
+        <div class="ph"><span class="pt"><svg class="i"><use href="#i-download" xlink:href="#i-download"/></svg><span data-i18n="setup1">نصب برنامه</span></span></div>
+        <div id="rec-card"></div>
+        <div class="pt" style="margin:18px 0 10px"><span data-i18n="apps_all">همه‌ی اپلیکیشن‌ها</span></div>
+        <div class="os-grid" id="os-grid"></div>
       </div>
       <div class="panel">
         <div class="ph"><span class="pt"><svg class="i"><use href="#i-alert" xlink:href="#i-alert"/></svg><span data-i18n="faq">سؤالات پرتکرار</span></span></div>
@@ -1539,9 +1541,9 @@ profile_t:"Profile photo",photo_choose:"Choose photo",photo_remove:"Remove",phot
 p_ios:"iOS",p_android:"Android",p_windows:"Windows",p_macos:"macOS",p_linux:"Linux",p_appletv:"Apple TV",p_androidtv:"Android TV",p_web:"Web",p_other:"Other"
 }};
 Object.assign(I18N.fa,{tab_account:"حساب",tab_setup:"راه‌اندازی",tab_adv:"پیشرفته",usage_t:"مصرف حجم",remaining_t:"باقی‌مانده",quota:"حجم کل: {t}",quota_unl:"حجم کل: نامحدود",exp_t:"تاریخ انقضا",r_14:"۱۴ روز",
- setup1:"نصب برنامه",setup2:"افزودن اشتراک",setup3:"اتصال",sub_hint:"لینک اشتراک را کپی کنید و در برنامه وارد کنید؛ یا از لیست برنامه‌ها دکمه‌ی «افزودن اشتراک» را بزنید.",setup3d:"یک سرور انتخاب کنید و دکمه‌ی اتصال را بزنید."});
+ setup1:"نصب برنامه",setup2:"افزودن اشتراک",setup3:"اتصال",sub_hint:"لینک اشتراک را کپی کنید و در برنامه وارد کنید؛ یا از تب «پیشرفته» برنامه را دانلود کنید و «افزودن اشتراک» را بزنید.",setup3d:"یک سرور انتخاب کنید و دکمه‌ی اتصال را بزنید."});
 Object.assign(I18N.en,{tab_account:"Account",tab_setup:"Set up",tab_adv:"Advanced",usage_t:"Data usage",remaining_t:"Remaining",quota:"Total quota: {t}",quota_unl:"Total quota: Unlimited",exp_t:"Expiry date",r_14:"14d",
- setup1:"Install an app",setup2:"Add subscription",setup3:"Connect",sub_hint:"Copy the link and paste it into the app, or open the app list and tap “Add subscription”.",setup3d:"Pick a server and press connect."});
+ setup1:"Install an app",setup2:"Add subscription",setup3:"Connect",sub_hint:"Copy the link and paste it into the app, or download an app from the “Advanced” tab and tap “Add subscription”.",setup3d:"Pick a server and press connect."});
 
 var lang=CFG.lang==="en"?"en":"fa";
 
@@ -1728,7 +1730,8 @@ function model(){
   var total=(expireMs&&createdMs&&expireMs>createdMs)?expireMs-createdMs:30*864e5;
   var diff=expireMs?expireMs-now:0,tpct=expireMs?clamp(diff/total*100,0,100):100;
   return{u:u,name:get(u,["username","name","email"])||"—",used:used,limit:limit,remain:remain,pct:pct,expireMs:expireMs,createdMs:createdMs,st:st,diff:diff,tpct:tpct,hold:hold,
-    devices:get(u,["hwid_limit","device_limit","ip_limit","max_ips","max_devices"]),ip:get(u,["ip","last_ip"]),life:Number(get(u,["lifetime_used_traffic","lifetime_traffic"])||used)};
+    devices:get(u,["hwid_limit","device_limit","ip_limit","max_ips","max_devices"]),ip:get(u,["ip","last_ip"]),life:Number(get(u,["lifetime_used_traffic","lifetime_traffic"])||used),
+    up:get(u,["upload","uploaded","uploaded_traffic","upload_traffic","up"]),down:get(u,["download","downloaded","downloaded_traffic","download_traffic","down"])};
 }
 function fmtDate(ms){try{return new Date(ms).toLocaleDateString(loc(),{year:"numeric",month:"2-digit",day:"2-digit"})}catch(e){return""}}
 function unskel(el){el.classList.remove("skel")}
@@ -1754,6 +1757,8 @@ function renderAll(){
   var unl=m.limit<=0;
   setT("traffic-pct",unl?"∞":nf(Math.round(m.pct),0)+"%");$("traffic-lbl").textContent=unl?t("unlimited"):t("remaining");
   setT("u-used",fmtBytes(m.used));setT("u-remain",unl?"∞":fmtBytes(m.remain));
+  var hasUD=m.up!=null&&m.down!=null&&isFinite(Number(m.up))&&isFinite(Number(m.down));
+  $("ud-up").hidden=!hasUD;$("ud-down").hidden=!hasUD;if(hasUD){$("u-up").textContent=fmtBytes(Number(m.up));$("u-down").textContent=fmtBytes(Number(m.down))}
   setT("u-quota",unl?t("quota_unl"):t("quota",{t:fmtBytes(m.limit)}));
   setRing("ring-traffic","bar-traffic",unl?100:m.pct,unl?"":(m.pct<=5?"bad":m.pct<=15?"warn":""));
   setT("acc-devices",m.devices==null||Number(m.devices)<=0?t("unlimited"):nf(m.devices,0));

@@ -1,3 +1,7 @@
+## v1.1.1
+- Set up tab now holds the subscription link and the configs list; Advanced tab holds app downloads, FAQ and support
+- Upload/download row under used/remaining (shown only when the panel provides those fields)
+
 ## v1.1.0
 - New flat card style: thin borders, smaller radii, lighter font weights, no glow/heavy shadows, flat logo tile and segmented controls
 
