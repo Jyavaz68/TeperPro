@@ -6,7 +6,9 @@
 
 Clean, tabbed, modern subscription page for Pasarguard
 
-![preview](preview/preview.jpg)
+![mobile preview](preview/preview.jpg)
+
+![desktop preview](preview/preview-desktop.jpg)
 
 </div>
 
