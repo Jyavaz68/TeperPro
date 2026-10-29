@@ -1,3 +1,6 @@
+## v1.1.0
+- New flat card style: thin borders, smaller radii, lighter font weights, no glow/heavy shadows, flat logo tile and segmented controls
+
 ## v1.0.0
 - First release of TeperPro: a clean, light-first, tabbed subscription page (Account / Set up / Advanced) for Pasarguard
 - Usage ring with used/remaining, expiry date, account details and a 24h / 7d / 14d usage chart
