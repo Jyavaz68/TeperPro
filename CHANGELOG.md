@@ -1,3 +1,6 @@
+## v1.1.2
+- Usage block: USED / REMAINING labels sit above the divider line, the values below it
+
 ## v1.1.1
 - Set up tab now holds the subscription link and the configs list; Advanced tab holds app downloads, FAQ and support
 - Upload/download row under used/remaining (shown only when the panel provides those fields)
