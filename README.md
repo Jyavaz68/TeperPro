@@ -94,12 +94,9 @@ sudo bash install.sh install --yes \
 3. `pasarguard restart`
 4. برندسازی دستی: بلوک `window.TEPERPRO_CONFIG` بالای `index.html` را ویرایش کنید.
 
-## 🛠 برای ناشر (انتشار در گیت‌هاب)
+## 🎨 شخصی‌سازی
 
-1. یک ریپازیتوری جدید به نام **TeperPro** بسازید و همه‌ی فایل‌ها (`index.html`، `install.sh`، `VERSION`، `CHANGELOG.md`، `README.md`، `LICENSE`) را آپلود کنید.
-2. نصب‌کننده روی `Jyavaz68/TeperPro` (شاخه‌ی `main`) تنظیم شده است. اگر اسم کاربری یا شاخه فرق دارد، `GH_USER` و `BRANCH` را در بالای `install.sh` عوض کنید.
-3. **برای هر آپدیت:** `index.html` را تغییر دهید، عدد داخل `VERSION` را بالا ببرید و بخشی به `CHANGELOG.md` اضافه کنید. کاربران با `teperpro update` نسخه‌ی جدید را می‌گیرند.
-4. برای مخفی کردن نوشته‌ی کوچک «TEPERPRO» پایین صفحه، در `window.TEPERPRO_CONFIG` مقدار `"credit": false` بگذارید.
+برای مخفی کردن نوشته‌ی کوچک «TEPERPRO» پایین صفحه، در `window.TEPERPRO_CONFIG` مقدار `"credit": false` بگذارید.
 
 ### شخصی‌سازی اپ‌های پیشنهادی
 
