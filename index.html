@@ -8,7 +8,17 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="generator" content="TeperPro">
-<script>(function(){try{var n=navigator,c=n.connection||{};if((n.deviceMemory&&n.deviceMemory<=4)||(n.hardwareConcurrency&&n.hardwareConcurrency<=4)||c.saveData)document.documentElement.className+=" lite"}catch(e){}})()</script>
+<script>/* performance tier: "fx" = strong device (blur + soft motion), default = blur only, "lite" = weak device (no blur, no motion).
+   Manual override for testing: add ?teperpro=fx | normal | lite to the page link (?teperpro=auto to reset). */
+(function(){try{var n=navigator,c=n.connection||{},h=document.documentElement,cores=n.hardwareConcurrency||0,mem=n.deviceMemory||0,
+apple=/iPhone|iPad|iPod/.test(n.userAgent)||(n.platform==="MacIntel"&&n.maxTouchPoints>1),
+reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches,force=null;
+try{var q=new URLSearchParams(location.search).get("teperpro");if(q==="auto")localStorage.removeItem("teperpro_tier");else if(q==="fx"||q==="normal"||q==="lite")localStorage.setItem("teperpro_tier",q);force=localStorage.getItem("teperpro_tier")}catch(e){}
+if(force==="lite")h.className+=" lite force";
+else if(force==="fx")h.className+=reduce?"":" fx force";
+else if(force==="normal"){}
+else if(c.saveData||(mem&&mem<=2)||(!apple&&cores&&cores<=4))h.className+=" lite";
+else if(!reduce&&(apple||(cores>=6&&(!mem||mem>=4))))h.className+=" fx"}catch(e){}})()</script>
 <title>TeperPro</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <style>
@@ -366,6 +376,126 @@ body.lock .toast.show{transform:translate(-50%,0)}
 }
 @media(max-width:350px){ #btn-refresh{display:none}.hero-main{flex-direction:column;align-items:stretch}.ring.big{margin:0 auto}}
 
+/* ================= GLASS / CRYSTAL LAYER ================= */
+html[data-theme=dark]{
+  --card:rgba(36,48,96,.30);--card-solid:#131b36;--tile:rgba(255,255,255,.065);--tile-2:rgba(255,255,255,.125);--tbd:rgba(255,255,255,.11);
+  --gloss:rgba(255,255,255,.13);--gbd:rgba(255,255,255,.17);--hi:rgba(255,255,255,.38);--hi2:rgba(255,255,255,.09);
+  --rim1:rgba(255,255,255,.75);--rim2:rgba(255,255,255,.05);--sheet:rgba(20,28,58,.74);--nav-bg:rgba(22,30,64,.52);
+  --shine:.1;--spotv:.13;--orb:.62;--gshadow:0 28px 60px -26px rgba(0,0,0,.7)}
+html[data-theme=light]{
+  --card:rgba(255,255,255,.46);--card-solid:#ffffff;--tile:rgba(255,255,255,.52);--tile-2:rgba(255,255,255,.82);--tbd:rgba(255,255,255,.92);
+  --gloss:rgba(255,255,255,.85);--gbd:rgba(255,255,255,.95);--hi:#ffffff;--hi2:rgba(255,255,255,.95);
+  --rim1:#ffffff;--rim2:rgba(255,255,255,.35);--sheet:rgba(255,255,255,.84);--nav-bg:rgba(255,255,255,.66);
+  --shine:.6;--spotv:.6;--orb:.78;--gshadow:0 24px 54px -26px rgba(50,70,140,.38)}
+
+/* backdrop: colour orbs that show softly through the glass */
+html:not(.lite) body::before{background:linear-gradient(180deg,var(--bg),var(--bg2))}
+.bg{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.orb{position:absolute;border-radius:50%;opacity:var(--orb)}
+.orb.o1{width:62vmax;height:62vmax;inset-inline-end:-20vmax;top:-26vmax;background:radial-gradient(circle,rgba(var(--a-rgb),.95) 0%,rgba(var(--a-rgb),0) 66%)}
+.orb.o2{width:56vmax;height:56vmax;inset-inline-start:-24vmax;bottom:-22vmax;background:radial-gradient(circle,rgba(var(--a2-rgb),.9) 0%,rgba(var(--a2-rgb),0) 66%)}
+.orb.o3{width:42vmax;height:42vmax;inset-inline-start:26%;top:30%;background:radial-gradient(circle,rgba(var(--a3-rgb,56,189,248),.8) 0%,rgba(var(--a3-rgb,56,189,248),0) 64%);opacity:calc(var(--orb)*.7)}
+.orb.o4{width:34vmax;height:34vmax;inset-inline-end:6%;bottom:2%;background:radial-gradient(circle,rgba(var(--a2-rgb),.8) 0%,rgba(var(--a2-rgb),0) 64%);opacity:calc(var(--orb)*.6)}
+
+/* glass surfaces */
+.head,.panel{position:relative}
+.head,.panel,.tabs{isolation:isolate;overflow:hidden;
+  background:radial-gradient(280px circle at var(--mx,50%) var(--my,-40%),rgba(255,255,255,var(--spot,0)),transparent 62%),linear-gradient(145deg,var(--gloss),rgba(255,255,255,0) 46%),var(--card);
+  border:1px solid var(--gbd);box-shadow:var(--gshadow),inset 0 1px 0 var(--hi),inset 0 0 26px rgba(255,255,255,.025)}
+.head>*,.panel>*,.tabs>*{position:relative;z-index:1}
+/* crystal rim: bright edge with a faint colour dispersion */
+.head::before,.panel::before,.tabs::before,.hero::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;z-index:2;
+  background:linear-gradient(135deg,var(--rim1),var(--rim2) 26%,rgba(255,255,255,0) 50%,rgba(var(--a2-rgb),.28) 76%,var(--rim1));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  html:not(.lite) .head,html:not(.lite) .panel,html:not(.lite) .tabs{-webkit-backdrop-filter:blur(14px) saturate(1.55);backdrop-filter:blur(14px) saturate(1.55)}
+  html:not(.lite) .hero{-webkit-backdrop-filter:blur(16px) saturate(1.5);backdrop-filter:blur(16px) saturate(1.5)}
+  html.fx .head,html.fx .panel,html.fx .tabs{-webkit-backdrop-filter:blur(22px) saturate(1.75);backdrop-filter:blur(22px) saturate(1.75)}
+  html.fx .hero{-webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7)}
+}
+@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  .head,.panel,.tabs{background:linear-gradient(145deg,var(--gloss),rgba(255,255,255,0) 46%),var(--card-solid)}
+}
+
+/* hero: tinted glass (the orbs stay visible through it) */
+.hero{--hp:90%}
+html[data-theme=dark] .hero{--hp:74%}
+@supports (background:color-mix(in srgb,red,blue)){
+  .hero{background:
+    radial-gradient(300px circle at var(--mx,70%) var(--my,-20%),rgba(255,255,255,var(--spot,0)),transparent 62%),
+    radial-gradient(120% 80% at 100% 0%,rgba(255,255,255,.34),transparent 55%),
+    linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0) 40%),
+    linear-gradient(150deg,color-mix(in srgb,var(--h1) var(--hp),transparent),color-mix(in srgb,var(--h2) var(--hp),transparent))}
+}
+.hero{border:1px solid rgba(255,255,255,.4);box-shadow:0 34px 60px -30px rgba(var(--a-rgb),.7),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(255,255,255,.12)}
+.hero.t-warn{box-shadow:0 34px 60px -30px rgba(234,88,12,.65),inset 0 1px 0 rgba(255,255,255,.55)}
+.hero.t-bad{box-shadow:0 34px 60px -30px rgba(220,38,38,.65),inset 0 1px 0 rgba(255,255,255,.55)}
+.hero::after{z-index:3}
+.hero>*:not(.hero-bg){position:relative;z-index:1}
+
+@media(min-width:980px){.tabs{position:relative}}
+
+/* inner glass tiles */
+.row,.stat,.stp,.cfg,.os,.app,.faq,.subbox,.seg,.search input,.gate input,.sq,.iconbtn,.btn:not(.primary),.col .tr{
+  background:var(--tile);border-color:var(--tbd);box-shadow:inset 0 1px 0 var(--hi2)}
+.btn:not(.primary):hover,.sq:hover,.iconbtn:hover,button.stp:hover,.os:hover,.cfg:hover{background:var(--tile-2)}
+.os.cur{background:rgba(var(--ok-rgb),.12)}
+.col .tr{box-shadow:inset 0 1px 2px rgba(0,0,0,.08)}
+.skel{background-image:linear-gradient(90deg,var(--tile),var(--tile-2),var(--tile))}
+.search input:focus,.gate input:focus{background:var(--tile-2)}
+/* glossy accent elements */
+.tile:not(.has-img),.sn,.cfg-ic,.rec-i,.support .big,.tab.on,.seg button.on,.btn.primary{
+  background-image:linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,0) 52%),linear-gradient(145deg,var(--a1),var(--a2))}
+.btn.primary:hover{background-image:linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,0) 52%),linear-gradient(145deg,var(--a1),var(--a2))}
+.tile:not(.has-img),.sn,.cfg-ic,.rec-i,.support .big,.btn.primary,.tab.on,.seg button.on{box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -6px 12px rgba(0,0,0,.08),0 12px 22px -12px rgba(var(--a-rgb),.9)}
+.hero-cta{box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 12px 24px -12px rgba(0,0,0,.45)}
+.hbtn,.chip{box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+#rec-card{box-shadow:inset 0 1px 0 var(--hi2)}
+.banner{box-shadow:inset 0 1px 0 var(--hi2)}
+.insight{box-shadow:inset 0 1px 0 var(--hi2)}
+.qr canvas{box-shadow:0 18px 40px -18px rgba(var(--a-rgb),.6),inset 0 1px 0 #fff}
+
+/* sheets / toast / dock */
+.sheet-p,.toast{background:linear-gradient(145deg,var(--gloss),rgba(255,255,255,0) 50%),var(--sheet);border:1px solid var(--gbd);box-shadow:var(--gshadow),inset 0 1px 0 var(--hi)}
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  html:not(.lite) .sheet-p,html:not(.lite) .toast{-webkit-backdrop-filter:blur(22px) saturate(1.6);backdrop-filter:blur(22px) saturate(1.6)}
+}
+@media(max-width:979px){
+  .tabs{background:linear-gradient(145deg,var(--gloss),rgba(255,255,255,0) 50%),var(--nav-bg)}
+}
+
+/* ---------- strong devices (auto "fx" tier): soft motion ---------- */
+html.fx .orb{will-change:transform;animation:orbA 24s ease-in-out infinite alternate}
+html.fx .orb.o2{animation-name:orbB;animation-duration:28s}
+html.fx .orb.o3{animation-name:orbC;animation-duration:32s}
+html.fx .orb.o4{animation-name:orbA;animation-duration:36s;animation-delay:-12s}
+@keyframes orbA{to{transform:translate3d(-7vmax,6vmax,0) scale(1.12)}}
+@keyframes orbB{to{transform:translate3d(8vmax,-6vmax,0) scale(1.1)}}
+@keyframes orbC{to{transform:translate3d(-5vmax,-7vmax,0) scale(.9)}}
+html.fx .head::after,html.fx .panel::after,html.fx .tabs::after{content:"";position:absolute;top:-50%;left:-60%;width:60%;height:200%;pointer-events:none;z-index:0;transform:rotate(18deg);
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,0) 30%,rgba(255,255,255,var(--shine)) 50%,rgba(255,255,255,0) 70%,transparent 100%);animation:shinePass 10s ease-in-out infinite}
+html.fx .panel:nth-of-type(2n)::after{animation-delay:-3.5s}
+html.fx .panel:nth-of-type(3n)::after{animation-delay:-6.5s}
+html.fx .tabs::after{animation-delay:-2s}
+@keyframes shinePass{0%{left:-60%;opacity:0}15%{opacity:.9}50%{left:120%;opacity:.9}51%{opacity:0}100%{left:-60%;opacity:0}}
+html.fx .head:hover,html.fx .panel:hover,html.fx .hero:hover,html.fx .tabs:hover{--spot:var(--spotv)}
+html.fx .hero:hover{--spot:.2}
+html.fx .ring.big::after{content:"";position:absolute;inset:-7%;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(var(--hov),.3),transparent 66%);animation:halo 5s ease-in-out infinite}
+@keyframes halo{0%,100%{opacity:.35;transform:scale(.96)}50%{opacity:.9;transform:scale(1.06)}}
+html.fx .hero-bg i{animation-duration:14s}
+html.fx .tile:not(.has-img){animation:tileHue 14s linear infinite}
+@keyframes tileHue{50%{filter:hue-rotate(28deg) saturate(1.1)}}
+html.fx .cfg,html.fx .os,html.fx .stp,html.fx .row{transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .2s,background .2s,box-shadow .25s}
+html.fx .cfg:hover,html.fx .os:hover,html.fx button.stp:hover,html.fx .row:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 var(--hi2),0 16px 28px -18px rgba(var(--a-rgb),.55)}
+
+/* weak devices: no blur, no motion, static colour backdrop */
+html.lite[data-theme=light]{--tile:#f1f4fb;--tile-2:#ffffff;--tbd:rgba(20,30,70,.09);--hi2:rgba(255,255,255,.9)}
+html.lite[data-theme=dark]{--tile:rgba(255,255,255,.07);--tile-2:rgba(255,255,255,.12)}
+html.lite .bg{display:none}
+html.lite .head,html.lite .panel,html.lite .tabs{background:linear-gradient(145deg,var(--gloss),rgba(255,255,255,0) 46%),var(--card-solid);-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+html.lite .hero,html.lite .sheet-p,html.lite .toast,html.lite .chip{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+html.lite .sheet-p,html.lite .toast{background:var(--card-solid)}
+
 /* lite mode (weak devices) + reduced motion */
 html.lite *,html.lite *::before,html.lite *::after{animation:none!important}
 html.lite .hero-bg{display:none}
@@ -437,6 +567,7 @@ window.TEPERPRO_CONFIG = {
 <symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 3v4M17 5h4M5 17v4M3 19h4"/></symbol>
 </svg>
 
+<div class="bg" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i><i class="orb o4"></i></div>
 <div class="page">
   <header class="head">
     <span class="tile logo"><img alt=""><svg class="i"><use href="#i-shield" xlink:href="#i-shield"/></svg></span>
@@ -1631,7 +1762,7 @@ function applyColors(th,bg){
   var h=document.documentElement,st=h.style,p=accentPair(),a1=p[0],a2=p[1],avg=(lumOf(a1)+lumOf(a2))/2;
   st.setProperty("--a1",a1);st.setProperty("--a2",a2);st.setProperty("--a-rgb",h2r(a1).join(","));st.setProperty("--a2-rgb",h2r(a2).join(","));
   st.setProperty("--a-ink",th==="light"?mixc(a1,"#000000",.3):mixc(a1,"#ffffff",.3));
-  st.setProperty("--on-a",avg>.22?"#0a0f1e":"#ffffff");st.setProperty("--on-rgb",avg>.22?"10,15,30":"255,255,255");
+  st.setProperty("--on-a",avg>.22?"#0a0f1e":"#ffffff");st.setProperty("--on-rgb",avg>.22?"10,15,30":"255,255,255");st.setProperty("--a3-rgb",h2r(shiftHue(a1,-72)).join(","));if(avg>.22)st.setProperty("--hp","92%");else st.removeProperty("--hp");
   var keys=["--bg","--bg2","--shell","--panel","--panel2"];
   if(bg){
     st.setProperty("--bg",bg);
@@ -2017,6 +2148,30 @@ function init(){
   if(ctx)loadAll(ctx);
 }
 init();
+
+/* soft light that follows the pointer on strong desktop devices */
+(function(){var h=document.documentElement;if(!window.matchMedia||!matchMedia("(hover:hover) and (pointer:fine)").matches)return;
+  var cur=null,raf=0,ex=0,ey=0;
+  document.addEventListener("pointermove",function(e){if(!h.classList.contains("fx"))return;
+    var el=e.target&&e.target.closest?e.target.closest(".panel,.head,.hero,.tabs"):null;if(!el)return;
+    cur=el;ex=e.clientX;ey=e.clientY;
+    if(!raf)raf=requestAnimationFrame(function(){raf=0;var r=cur.getBoundingClientRect();cur.style.setProperty("--mx",(ex-r.left)+"px");cur.style.setProperty("--my",(ey-r.top)+"px")})},{passive:true});
+})();
+/* self-tuning: if the page stutters, drop fx, then drop to lite */
+(function(){
+  var h=document.documentElement;if(h.classList.contains("lite")||h.classList.contains("force"))return;
+  function sample(done){var last=0,n=0,slow=0,start=0;
+    function f(ts){if(document.hidden){last=0;return requestAnimationFrame(f)}
+      if(!start)start=ts;
+      if(last){var d=ts-last;if(d<500){n++;if(d>38)slow++}}
+      last=ts;
+      if(ts-start<2500)requestAnimationFrame(f);else done(n>20&&slow/n>0.3)}
+    requestAnimationFrame(f)}
+  setTimeout(function(){sample(function(bad){
+    if(!bad)return;
+    if(h.classList.contains("fx")){h.classList.remove("fx");setTimeout(function(){sample(function(bad2){if(bad2)h.classList.add("lite")})},800)}
+    else h.classList.add("lite")})},2000);
+})();
 })();
 </script>
 </body>

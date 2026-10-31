@@ -1,3 +1,9 @@
+## v2.1.0
+- Crystal glass look: every card, the header, the tab bar and the dialogs are now translucent glass with a bright crystal rim, so the soft background colours show through
+- Colour orbs behind the glass; on strong devices they drift slowly, cards get a gentle light sweep, the status ring has a soft halo and a light follows the mouse on desktop
+- Performance tiers like Teper: strong devices get the full effect, normal devices get glass only, weak devices get a light static version. Auto-detected, and it self-downgrades if the page stutters. Test with ?teperpro=fx | normal | lite (auto to reset)
+- Status card is tinted glass instead of a solid gradient
+
 ## v2.0.1
 - Fix: an unintended Jinja2 comment sequence in the CSS caused an Internal Server Error on Pasarguard
 
