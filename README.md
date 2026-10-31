@@ -95,10 +95,6 @@ sudo bash install.sh install --yes \
 3. `pasarguard restart`
 4. برندسازی دستی: بلوک `window.TEPERPRO_CONFIG` بالای `index.html` را ویرایش کنید.
 
-## 🎨 شخصی‌سازی
-
-برای مخفی کردن نوشته‌ی کوچک «TEPERPRO» پایین صفحه، در `window.TEPERPRO_CONFIG` مقدار `"credit": false` بگذارید.
-
 ### شخصی‌سازی اپ‌های پیشنهادی
 
 ```js
