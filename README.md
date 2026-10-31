@@ -93,8 +93,7 @@ sudo bash install.sh install --yes \
    SUBSCRIPTION_PAGE_TEMPLATE="subscription/index.html"
    ```
 3. `pasarguard restart`
-4. برندسازی دستی: بلوک `window.TEPERPRO_CONFIG` بالای `index.html` را ویرایش کنید.
-
+4. 
 ### شخصی‌سازی اپ‌های پیشنهادی
 
 ```js
