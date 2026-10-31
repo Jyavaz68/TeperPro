@@ -1,3 +1,6 @@
+## v2.0.1
+- Fix: an unintended Jinja2 comment sequence in the CSS caused an Internal Server Error on Pasarguard
+
 ## v2.0.0
 - Full visual redesign ("Aurora"): soft aurora backdrop, glass surfaces, rounded cards, bolder type
 - New gradient status card with a big data ring, used/remaining tiles and a second ring for the days left; it turns amber/red automatically when data or time is about to run out
