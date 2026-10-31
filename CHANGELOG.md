@@ -1,3 +1,13 @@
+## v2.0.0
+- Full visual redesign ("Aurora"): soft aurora backdrop, glass surfaces, rounded cards, bolder type
+- New gradient status card with a big data ring, used/remaining tiles and a second ring for the days left; it turns amber/red automatically when data or time is about to run out
+- Desktop: two-column dashboard (sticky status card + tabbed content). Mobile: floating bottom dock
+- Quick actions on the status card: Quick connect (opens the apps for your device), copy link, QR
+- Usage insight: estimates how many days your data will last at the current pace
+- 3-step "Connect" guide on the Set up tab, refresh button, nicer chart, config cards and FAQ
+- Fixed the theme button icon never switching between sun and moon
+- Same installer, same branding options, same data logic as v1.x
+
 ## v1.1.2
 - Usage block: USED / REMAINING labels sit above the divider line, the values below it
 
